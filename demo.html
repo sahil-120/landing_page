@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+        
+        .modal {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            position: fixed;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .modal[open] {
+            display: flex;
+        }
+        
+        .model-inner {
+            background-color: white;
+            border-radius: 0.5em;
+            max-width: 600px;
+            padding: 2em;
+            margin: auto;
+        }
+        
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid black;
+        }
+        
+        #modal-overlay {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            background-color: black;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="demo-modal" class="modal" role="dialog" tabindex="-1">
+        <div class="model-inner">
+            <div class="modal-header">
+                <h3>Hello World</h3>
+                <button class="modal-close" data-id="demo-modal" aria-label="Close">
+              &times;
+            </button>
+            </div>
+            <p>
+                Natus earum velit ab nobis eos. Sed et exercitationem voluptatum omnis dolor voluptates. Velit ut ipsam sunt ipsam nostrum. Maiores officia accusamus qui sapiente. Dolor qui vel placeat dolor nesciunt quo dolor dolores. Quo accusamus hic atque nisi minima.
+            </p>
+        </div>
+    </div>
+    <button class="modal-open" data-id="demo-modal">Display Modal</button>
+</body>
+<script>
+    let modal;
+    document.addEventListener("click", (e) => {
+        if (e.target.className === "modal-open") {
+            modal = document.getElementById(e.target.dataset.id);
+            openModal(modal);
+        } else if (e.target.className === "modal-close") {
+            closeModal(modal);
+        } else {
+            return;
+        }
+    });
+
+    const openModal = (modal) => {
+        document.body.style.overflow = "hidden";
+        modal.setAttribute("open", "true");
+        document.addEventListener("keydown", escClose);
+        let overlay = document.createElement("div");
+        overlay.id = "modal-overlay";
+        document.body.appendChild(overlay);
+    };
+
+    const closeModal = (modal) => {
+        document.body.style.overflow = "auto";
+        modal.removeAttribute("open");
+        document.removeEventListener("keydown", escClose);
+        document.body.removeChild(document.getElementById("modal-overlay"));
+    };
+
+    const escClose = (e) => {
+        if (e.keyCode == 27) {
+            closeModal();
+        }
+    };
+</script>
+
+</html>
